@@ -49,57 +49,23 @@ const MOTION_VIDEOS: SliderVideo[] = [
   },
 ];
 
-const DIGITAL_VIDEOS: SliderVideo[] = [
-  {
-    key: 'gd-1X_Tc9CnX8EMfUopIaJ4ob_JK2zih9nTh',
-    url: 'https://drive.google.com/file/d/1X_Tc9CnX8EMfUopIaJ4ob_JK2zih9nTh/view?usp=sharing',
-    thumb: driveThumb('1X_Tc9CnX8EMfUopIaJ4ob_JK2zih9nTh'),
-  },
-  {
-    key: 'gd-1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-',
-    url: 'https://drive.google.com/file/d/1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-/view?usp=sharing',
-    thumb: driveThumb('1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-'),
-  },
-  {
-    key: 'gd-1pNmr1Gd37s2plEM7pO3_YElKjOlEh3zK',
-    url: 'https://drive.google.com/file/d/1pNmr1Gd37s2plEM7pO3_YElKjOlEh3zK/view?usp=sharing',
-    thumb: driveThumb('1pNmr1Gd37s2plEM7pO3_YElKjOlEh3zK'),
-  },
-  {
-    key: 'gd-1Y17v--ifeVPubkuE-7XUGgRrRog21-5t',
-    url: 'https://drive.google.com/file/d/1Y17v--ifeVPubkuE-7XUGgRrRog21-5t/view?usp=sharing',
-    thumb: driveThumb('1Y17v--ifeVPubkuE-7XUGgRrRog21-5t'),
-  },
-  {
-    key: 'gd-18WGAQkpzAT3rbqTvqWyx5Wg4SJ50Qrus',
-    url: 'https://drive.google.com/file/d/18WGAQkpzAT3rbqTvqWyx5Wg4SJ50Qrus/view?usp=sharing',
-    thumb: driveThumb('18WGAQkpzAT3rbqTvqWyx5Wg4SJ50Qrus'),
-  },
-  {
-    key: 'gd-1KP1FhjCgyrADdJHIs-VFSqsyNPguYHJf',
-    url: 'https://drive.google.com/file/d/1KP1FhjCgyrADdJHIs-VFSqsyNPguYHJf/view?usp=sharing',
-    thumb: driveThumb('1KP1FhjCgyrADdJHIs-VFSqsyNPguYHJf'),
-  },
-];
-
 export default function Works({ colorMode }: { colorMode: ColorMode }) {
   return (
     <div className="min-h-full flex flex-col lg:flex-row gap-12 pb-24 lg:pb-0">
       <div className="flex-[2] flex flex-col justify-center gap-10 z-10 w-full min-w-0">
         <VideoSlider title="PRODUCTION" videos={PRODUCTION_VIDEOS} />
-        <VideoSlider title="DIGITAL / PR" videos={DIGITAL_VIDEOS} />
+        <VideoSlider title="DIGITAL / PR" count={4} />
         <VideoSlider title="MOTION" videos={MOTION_VIDEOS} />
       </div>
       
       <div className="flex-1 flex flex-col justify-center lg:pl-12 z-10 mt-8 lg:mt-0 w-full max-w-md">
         <h2 className="text-3xl font-bold mb-6 text-white tracking-wide">Thanks =)</h2>
         <p className="text-white/80 leading-relaxed mb-12 text-base md:text-lg font-medium">
-          I have always enjoyed exploring new tools and their applications. If you have any challenging or interesting projects, let me know!
-          <br />
-          <br />
-          This site was built using the following workflow:
-          <br />
-          Figma &gt; Gemini &gt; Cursor &gt; GitHub
+          I'm always eager to learn new things and put them into practice. 
+          For me, design is not just about creating visuals — it's about 
+          optimizing processes to achieve faster and higher-quality results. 
+          I'm always open to new collaborations and creative projects that 
+          push ideas forward.
         </p>
         
         <a
