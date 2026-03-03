@@ -24,7 +24,7 @@ export default function Main({ colorMode }: { colorMode: ColorMode }) {
       <div className="flex-1 h-full flex items-center justify-center md:justify-end relative w-full mt-8 md:mt-0">
         <div className="w-full max-w-[320px] md:max-w-[400px] aspect-[3/4] rounded-[2rem] overflow-hidden relative group shadow-2xl opacity-90">
           <img
-            src="/portfolio/photo/photo_black.jpg"
+            src="/photo/photo_black.jpg"
             alt="Kirill"
             className="w-full h-full object-cover"
             loading="eager"

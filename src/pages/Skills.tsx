@@ -62,7 +62,7 @@ export default function Skills({ colorMode }: { colorMode: ColorMode }) {
               >
                 <div className="w-10 h-10 md:w-12 md:h-12">
                   <img
-                    src={`/portfolio/icons/${encodeURIComponent(icon.file)}`}
+                    src={`/icons/${encodeURIComponent(icon.file)}`}
                     alt={icon.name}
                     className="w-full h-full object-contain"
                     loading="lazy"

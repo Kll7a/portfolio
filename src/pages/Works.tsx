@@ -16,6 +16,39 @@ const PRODUCTION_VIDEOS: SliderVideo[] = [
   { key: 'yt-yPIXXIB8wVk', url: 'https://youtu.be/yPIXXIB8wVk', thumb: ytThumb('yPIXXIB8wVk') },
 ];
 
+const DIGITAL_PR_VIDEOS: SliderVideo[] = [
+  {
+    key: 'gd-1X_Tc9CnX8EMfUopIaJ4ob_JK2zih9nTh',
+    url: 'https://drive.google.com/file/d/1X_Tc9CnX8EMfUopIaJ4ob_JK2zih9nTh/view?usp=sharing',
+    thumb: driveThumb('1X_Tc9CnX8EMfUopIaJ4ob_JK2zih9nTh'),
+  },
+  {
+    key: 'gd-1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-',
+    url: 'https://drive.google.com/file/d/1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-/view?usp=sharing',
+    thumb: driveThumb('1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-'),
+  },
+  {
+    key: 'gd-1pNmr1Gd37s2plEM7pO3_YElKjOlEh3zK',
+    url: 'https://drive.google.com/file/d/1pNmr1Gd37s2plEM7pO3_YElKjOlEh3zK/view?usp=sharing',
+    thumb: driveThumb('1pNmr1Gd37s2plEM7pO3_YElKjOlEh3zK'),
+  },
+  {
+    key: 'gd-1Y17v--ifeVPubkuE-7XUGgRrRog21-5t',
+    url: 'https://drive.google.com/file/d/1Y17v--ifeVPubkuE-7XUGgRrRog21-5t/view?usp=sharing',
+    thumb: driveThumb('1Y17v--ifeVPubkuE-7XUGgRrRog21-5t'),
+  },
+  {
+    key: 'gd-18WGAQkpzAT3rbqTvqWyx5Wg4SJ50Qrus',
+    url: 'https://drive.google.com/file/d/18WGAQkpzAT3rbqTvqWyx5Wg4SJ50Qrus/view?usp=sharing',
+    thumb: driveThumb('18WGAQkpzAT3rbqTvqWyx5Wg4SJ50Qrus'),
+  },
+  {
+    key: 'gd-1KP1FhjCgyrADdJHIs-VFSqsyNPguYHJf',
+    url: 'https://drive.google.com/file/d/1KP1FhjCgyrADdJHIs-VFSqsyNPguYHJf/view?usp=sharing',
+    thumb: driveThumb('1KP1FhjCgyrADdJHIs-VFSqsyNPguYHJf'),
+  },
+];
+
 const MOTION_VIDEOS: SliderVideo[] = [
   {
     key: 'gd-1Qe43imJZA0DjqJp7zmB3JAAgrwZK_oB2',
@@ -54,7 +87,7 @@ export default function Works({ colorMode }: { colorMode: ColorMode }) {
     <div className="min-h-full flex flex-col lg:flex-row gap-12 pb-24 lg:pb-0">
       <div className="flex-[2] flex flex-col justify-center gap-10 z-10 w-full min-w-0">
         <VideoSlider title="PRODUCTION" videos={PRODUCTION_VIDEOS} />
-        <VideoSlider title="DIGITAL / PR" count={4} />
+        <VideoSlider title="DIGITAL / PR" videos={DIGITAL_PR_VIDEOS} />
         <VideoSlider title="MOTION" videos={MOTION_VIDEOS} />
       </div>
       
@@ -89,7 +122,7 @@ function VideoSlider({ title, count, videos }: { title: string; count?: number; 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
       const container = scrollRef.current;
-      const scrollAmount = container.clientWidth * 0.8; // Scroll by 80% of container width
+      const scrollAmount = container.clientWidth * 0.8; 
       
       container.scrollTo({
         left: container.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount),
@@ -107,7 +140,6 @@ function VideoSlider({ title, count, videos }: { title: string; count?: number; 
         {title}
       </h3>
       <div className="relative group/slider -mx-4 md:mx-0">
-        {/* Left Button - Outside the mask */}
         <button 
           onClick={() => scroll('left')}
           className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-50 p-2 md:p-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90 hover:text-white hover:scale-110 transition-all flex items-center justify-center shadow-xl cursor-pointer"
@@ -117,13 +149,11 @@ function VideoSlider({ title, count, videos }: { title: string; count?: number; 
           <ChevronLeft size={20} />
         </button>
         
-        {/* Fade Mask Container */}
         <div className="w-full [mask-image:linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)] relative z-10">
           <div 
             ref={scrollRef}
             className="flex gap-3 md:gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 px-4 md:px-6"
           >
-            {/* Spacer to ensure the first item can be scrolled past the fade mask */}
             <div className="min-w-[10px] md:min-w-[20px] shrink-0" />
             {hasVideos
               ? videos!.map((video) => (
@@ -160,12 +190,10 @@ function VideoSlider({ title, count, videos }: { title: string; count?: number; 
                     </div>
                   </div>
                 ))}
-            {/* Spacer to ensure the last item can be scrolled past the fade mask */}
             <div className="min-w-[10px] md:min-w-[20px] shrink-0" />
           </div>
         </div>
 
-        {/* Right Button - Outside the mask */}
         <button 
           onClick={() => scroll('right')}
           className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-50 p-2 md:p-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90 hover:text-white hover:scale-110 transition-all flex items-center justify-center shadow-xl cursor-pointer"
