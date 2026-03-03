@@ -2,22 +2,15 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main] # Или master, в зависимости от вашей основной ветки
 
-# Разрешения для токена GitHub
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Блокировка параллельных запусков (если ты быстро сделаешь два пуша подряд)
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
 jobs:
-  # Задача 1: Только сборка кода
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,17 +31,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: dist
 
-  # Задача 2: Только публикация (ждет завершения сборки)
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    name: Deploy
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
