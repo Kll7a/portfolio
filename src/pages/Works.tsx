@@ -46,36 +46,11 @@ const DIGITAL_PR_VIDEOS: SliderVideo[] = [
 ];
 
 const MOTION_VIDEOS: SliderVideo[] = [
-  {
-    key: 'gd-1Qe43imJZA0DjqJp7zmB3JAAgrwZK_oB2',
-    url: 'https://drive.google.com/file/d/1Qe43imJZA0DjqJp7zmB3JAAgrwZK_oB2/view?usp=sharing',
-    thumb: driveThumb('1Qe43imJZA0DjqJp7zmB3JAAgrwZK_oB2'),
-  },
-  {
-    key: 'gd-1vkzoqm6oWWf3pw63-lnwgjLPFmYDHLn1',
-    url: 'https://drive.google.com/file/d/1vkzoqm6oWWf3pw63-lnwgjLPFmYDHLn1/view?usp=sharing',
-    thumb: driveThumb('1vkzoqm6oWWf3pw63-lnwgjLPFmYDHLn1'),
-  },
-  {
-    key: 'gd-1WDTeuGW13JjHROf94wJOSRSDKirx0pP6',
-    url: 'https://drive.google.com/file/d/1WDTeuGW13JjHROf94wJOSRSDKirx0pP6/view?usp=sharing',
-    thumb: driveThumb('1WDTeuGW13JjHROf94wJOSRSDKirx0pP6'),
-  },
-  {
-    key: 'gd-1EHsFK4ysby_BXNOkUgyMmj8MRERYX1wK',
-    url: 'https://drive.google.com/file/d/1EHsFK4ysby_BXNOkUgyMmj8MRERYX1wK/view?usp=sharing',
-    thumb: driveThumb('1EHsFK4ysby_BXNOkUgyMmj8MRERYX1wK'),
-  },
-  {
-    key: 'gd-1NKOX-UZMrsFElCG-r7-haxY76IjNv44e',
-    url: 'https://drive.google.com/file/d/1NKOX-UZMrsFElCG-r7-haxY76IjNv44e/view?usp=sharing',
-    thumb: driveThumb('1NKOX-UZMrsFElCG-r7-haxY76IjNv44e'),
-  },
-  {
-    key: 'gd-1Yrv46tjhps6Jg0QDNEBVfbaGSc_ODwf7',
-    url: 'https://drive.google.com/file/d/1Yrv46tjhps6Jg0QDNEBVfbaGSc_ODwf7/view?usp=sharing',
-    thumb: driveThumb('1Yrv46tjhps6Jg0QDNEBVfbaGSc_ODwf7'),
-  },
+  { key: '1KHMN-cxAQc', url: 'https://youtu.be/1KHMN-cxAQc', thumb: ytThumb('1KHMN-cxAQc') },
+  { key: '6KNkt1Lk5_o', url: 'https://youtu.be/6KNkt1Lk5_o', thumb: ytThumb('6KNkt1Lk5_o') },
+  { key: 'yt-_wfHC5LTrqU', url: 'https://youtu.be/_wfHC5LTrqU', thumb: ytThumb('_wfHC5LTrqU') },
+  { key: 'M1SN7xeCzYw', url: 'https://youtu.be/M1SN7xeCzYw', thumb: ytThumb('M1SN7xeCzYw') },
+  { key: '2ECIyDdNgvg', url: 'https://youtu.be/2ECIyDdNgvg', thumb: ytThumb('2ECIyDdNgvg') },
 ];
 
 export default function Works({ colorMode }: { colorMode: ColorMode }) {
