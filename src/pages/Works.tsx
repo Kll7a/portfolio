@@ -17,11 +17,7 @@ const PRODUCTION_VIDEOS: SliderVideo[] = [
 ];
 
 const DIGITAL_PR_VIDEOS: SliderVideo[] = [
-  {
-    key: 'gd-1X_Tc9CnX8EMfUopIaJ4ob_JK2zih9nTh',
-    url: 'https://drive.google.com/file/d/1X_Tc9CnX8EMfUopIaJ4ob_JK2zih9nTh/view?usp=sharing',
-    thumb: driveThumb('1X_Tc9CnX8EMfUopIaJ4ob_JK2zih9nTh'),
-  },
+{ key: 'yt-jaZas0ZlTaA', url: 'https://youtu.be/jaZas0ZlTaA', thumb: ytThumb('jaZas0ZlTaA') },
   {
     key: 'gd-1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-',
     url: 'https://drive.google.com/file/d/1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-/view?usp=sharing',
