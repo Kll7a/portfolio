@@ -18,31 +18,7 @@ const PRODUCTION_VIDEOS: SliderVideo[] = [
 
 const DIGITAL_PR_VIDEOS: SliderVideo[] = [
 { key: 'yt-jaZas0ZlTaA', url: 'https://youtu.be/jaZas0ZlTaA', thumb: ytThumb('jaZas0ZlTaA') },
-  {
-    key: 'gd-1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-',
-    url: 'https://drive.google.com/file/d/1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-/view?usp=sharing',
-    thumb: driveThumb('1PPneUqwEiVwHMsDkQE7MTnSrFZCWhfP-'),
-  },
-  {
-    key: 'gd-1pNmr1Gd37s2plEM7pO3_YElKjOlEh3zK',
-    url: 'https://drive.google.com/file/d/1pNmr1Gd37s2plEM7pO3_YElKjOlEh3zK/view?usp=sharing',
-    thumb: driveThumb('1pNmr1Gd37s2plEM7pO3_YElKjOlEh3zK'),
-  },
-  {
-    key: 'gd-1Y17v--ifeVPubkuE-7XUGgRrRog21-5t',
-    url: 'https://drive.google.com/file/d/1Y17v--ifeVPubkuE-7XUGgRrRog21-5t/view?usp=sharing',
-    thumb: driveThumb('1Y17v--ifeVPubkuE-7XUGgRrRog21-5t'),
-  },
-  {
-    key: 'gd-18WGAQkpzAT3rbqTvqWyx5Wg4SJ50Qrus',
-    url: 'https://drive.google.com/file/d/18WGAQkpzAT3rbqTvqWyx5Wg4SJ50Qrus/view?usp=sharing',
-    thumb: driveThumb('18WGAQkpzAT3rbqTvqWyx5Wg4SJ50Qrus'),
-  },
-  {
-    key: 'gd-1KP1FhjCgyrADdJHIs-VFSqsyNPguYHJf',
-    url: 'https://drive.google.com/file/d/1KP1FhjCgyrADdJHIs-VFSqsyNPguYHJf/view?usp=sharing',
-    thumb: driveThumb('1KP1FhjCgyrADdJHIs-VFSqsyNPguYHJf'),
-  },
+{ key: '7x0NW1qSjDg', url: 'https://youtube.com/shorts/7x0NW1qSjDg', thumb: ytThumb('7x0NW1qSjDg') }, 
 ];
 
 const MOTION_VIDEOS: SliderVideo[] = [
