@@ -22,6 +22,9 @@ const DIGITAL_PR_VIDEOS: SliderVideo[] = [
   { key: 'yt-q6x2mmlzuXo', url: 'https://youtu.be/q6x2mmlzuXo', thumb: ytThumb('q6x2mmlzuXo') },
   { key: 'yt-hDQq59VbcNM', url: 'https://youtu.be/hDQq59VbcNM', thumb: ytThumb('hDQq59VbcNM') },
   { key: 'yt-JGG5Lryi0Hg', url: 'https://youtu.be/JGG5Lryi0Hg', thumb: ytThumb('JGG5Lryi0Hg') },
+  { key: 'yt-moCImK_W5II', url: 'https://youtu.be/moCImK_W5II', thumb: ytThumb('moCImK_W5II') },
+  { key: 'yt-0fVuoEDo4EI', url: 'https://youtu.be/0fVuoEDo4EI', thumb: ytThumb('0fVuoEDo4EI') },
+  { key: 'yt-ZnDBqPRPWos', url: 'https://youtu.be/ZnDBqPRPWos', thumb: ytThumb('ZnDBqPRPWos') },
 ];
 
 const MOTION_VIDEOS: SliderVideo[] = [
