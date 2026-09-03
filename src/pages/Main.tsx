@@ -7,7 +7,7 @@ export default function Main({ colorMode }: { colorMode: ColorMode }) {
     <div className="min-h-full flex flex-col md:flex-row items-center justify-between gap-8 pb-24 md:pb-0">
       <div className="flex-1 flex flex-col justify-center max-w-2xl z-10 w-full">
         <h2 className="text-xl md:text-2xl font-medium mb-4 tracking-wide" style={{ color: 'var(--theme-color)' }}>
-          Digital Designer
+          Art director
         </h2>
         <h1 className="text-6xl sm:text-8xl lg:text-[140px] font-bold tracking-[0.1em] mb-12 text-white leading-none">
           I.Kirill
