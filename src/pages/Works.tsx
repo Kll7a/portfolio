@@ -90,7 +90,7 @@ function VideoSlider({ title, count, videos, isVertical = false }: { title: stri
   // Динамические классы для карточки видео
   const cardClasses = `bg-white/5 border border-white/10 rounded-2xl snap-center flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer relative overflow-hidden group/video shadow-lg ${
     isVertical 
-      ? 'aspect-[9/16] min-w-[140px] md:min-w-[180px]' // Вертикальный формат + уменьшенная ширина
+      ? 'aspect-[9/16] min-w-[90px] md:min-w-[110px]' // Вертикальный формат + уменьшенная ширина
       : 'aspect-video min-w-[220px] md:min-w-[260px]' // Стандартный 16:9
   }`;
 
