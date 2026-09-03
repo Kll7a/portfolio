@@ -38,7 +38,8 @@ export default function Works({ colorMode }: { colorMode: ColorMode }) {
     <div className="min-h-full flex flex-col lg:flex-row gap-12 pb-24 lg:pb-0">
       <div className="flex-[2] flex flex-col justify-center gap-10 z-10 w-full min-w-0">
         <VideoSlider title="PRODUCTION" videos={PRODUCTION_VIDEOS} />
-        <VideoSlider title="DIGITAL / PR" videos={DIGITAL_PR_VIDEOS} />
+        {/* Добавлен проп isVertical={true} для блока DIGITAL / PR */}
+        <VideoSlider title="DIGITAL / PR" videos={DIGITAL_PR_VIDEOS} isVertical={true} />
         <VideoSlider title="MOTION" videos={MOTION_VIDEOS} />
       </div>
       
@@ -67,7 +68,8 @@ export default function Works({ colorMode }: { colorMode: ColorMode }) {
   );
 }
 
-function VideoSlider({ title, count, videos }: { title: string; count?: number; videos?: SliderVideo[] }) {
+// Добавлен isVertical в типизацию и параметры
+function VideoSlider({ title, count, videos, isVertical = false }: { title: string; count?: number; videos?: SliderVideo[]; isVertical?: boolean }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   
   const scroll = (direction: 'left' | 'right') => {
@@ -84,6 +86,13 @@ function VideoSlider({ title, count, videos }: { title: string; count?: number; 
 
   const placeholderVideos = Array.from({ length: count ?? 0 }).map((_, i) => i);
   const hasVideos = Array.isArray(videos) && videos.length > 0;
+
+  // Динамические классы для карточки видео
+  const cardClasses = `bg-white/5 border border-white/10 rounded-2xl snap-center flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer relative overflow-hidden group/video shadow-lg ${
+    isVertical 
+      ? 'aspect-[9/16] min-w-[140px] md:min-w-[180px]' // Вертикальный формат + уменьшенная ширина
+      : 'aspect-video min-w-[220px] md:min-w-[260px]' // Стандартный 16:9
+  }`;
 
   return (
     <div className="w-full relative">
@@ -113,7 +122,7 @@ function VideoSlider({ title, count, videos }: { title: string; count?: number; 
                     href={video.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="min-w-[220px] md:min-w-[260px] aspect-video bg-white/5 border border-white/10 rounded-2xl snap-center flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer relative overflow-hidden group/video shadow-lg"
+                    className={cardClasses}
                   >
                     <img
                       src={video.thumb}
@@ -131,7 +140,7 @@ function VideoSlider({ title, count, videos }: { title: string; count?: number; 
               : placeholderVideos.map((v) => (
                   <div
                     key={v}
-                    className="min-w-[220px] md:min-w-[260px] aspect-video bg-white/5 border border-white/10 rounded-2xl snap-center flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer relative overflow-hidden group/video shadow-lg"
+                    className={cardClasses}
                   >
                     <span className="text-white/30 text-[10px] font-medium uppercase tracking-widest">Video Slot</span>
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/video:opacity-100 transition-opacity duration-300">
