@@ -17,20 +17,20 @@ const PRODUCTION_VIDEOS: SliderVideo[] = [
 ];
 
 const DIGITAL_PR_VIDEOS: SliderVideo[] = [
-{ key: '7x0NW1qSjDg', url: 'https://youtube.com/shorts/7x0NW1qSjDg', thumb: ytThumb('7x0NW1qSjDg') },
-{ key: 'lW-juLVFA3Y', url: 'https://youtube.com/shorts/lW-juLVFA3Y', thumb: ytThumb('lW-juLVFA3Y') },
-{ key: 'q6x2mmlzuXo', url: 'https://youtube.com/shorts/q6x2mmlzuXo', thumb: ytThumb('q6x2mmlzuXo') },
-{ key: 'hDQq59VbcNM', url: 'https://youtube.com/shorts/hDQq59VbcNM', thumb: ytThumb('hDQq59VbcNM') },
-{ key: 'JGG5Lryi0Hg', url: 'https://youtube.com/shorts/JGG5Lryi0Hg', thumb: ytThumb('JGG5Lryi0Hg') },
+  { key: 'yt-7x0NW1qSjDg', url: 'https://youtu.be/7x0NW1qSjDg', thumb: ytThumb('7x0NW1qSjDg') },
+  { key: 'yt-lW-juLVFA3Y', url: 'https://youtu.be/lW-juLVFA3Y', thumb: ytThumb('lW-juLVFA3Y') },
+  { key: 'yt-q6x2mmlzuXo', url: 'https://youtu.be/q6x2mmlzuXo', thumb: ytThumb('q6x2mmlzuXo') },
+  { key: 'yt-hDQq59VbcNM', url: 'https://youtu.be/hDQq59VbcNM', thumb: ytThumb('hDQq59VbcNM') },
+  { key: 'yt-JGG5Lryi0Hg', url: 'https://youtu.be/JGG5Lryi0Hg', thumb: ytThumb('JGG5Lryi0Hg') },
 ];
 
 const MOTION_VIDEOS: SliderVideo[] = [
-  { key: '1KHMN-cxAQc', url: 'https://youtu.be/1KHMN-cxAQc', thumb: ytThumb('1KHMN-cxAQc') },
-  { key: '6KNkt1Lk5_o', url: 'https://youtu.be/6KNkt1Lk5_o', thumb: ytThumb('6KNkt1Lk5_o') },
+  { key: 'yt-1KHMN-cxAQc', url: 'https://youtu.be/1KHMN-cxAQc', thumb: ytThumb('1KHMN-cxAQc') },
+  { key: 'yt-6KNkt1Lk5_o', url: 'https://youtu.be/6KNkt1Lk5_o', thumb: ytThumb('6KNkt1Lk5_o') },
   { key: 'yt-_wfHC5LTrqU', url: 'https://youtu.be/_wfHC5LTrqU', thumb: ytThumb('_wfHC5LTrqU') },
   { key: 'yt-jaZas0ZlTaA', url: 'https://youtu.be/jaZas0ZlTaA', thumb: ytThumb('jaZas0ZlTaA') },
-  { key: 'M1SN7xeCzYw', url: 'https://youtu.be/M1SN7xeCzYw', thumb: ytThumb('M1SN7xeCzYw') },
-  { key: '2ECIyDdNgvg', url: 'https://youtu.be/2ECIyDdNgvg', thumb: ytThumb('2ECIyDdNgvg') },
+  { key: 'yt-M1SN7xeCzYw', url: 'https://youtu.be/M1SN7xeCzYw', thumb: ytThumb('M1SN7xeCzYw') },
+  { key: 'yt-2ECIyDdNgvg', url: 'https://youtu.be/2ECIyDdNgvg', thumb: ytThumb('2ECIyDdNgvg') },
 ];
 
 export default function Works({ colorMode }: { colorMode: ColorMode }) {
