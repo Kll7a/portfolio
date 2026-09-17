@@ -23,7 +23,7 @@ const DIGITAL_PR_VIDEOS: SliderVideo[] = [
   { key: 'yt-hDQq59VbcNM', url: 'https://youtu.be/hDQq59VbcNM', thumb: ytThumb('hDQq59VbcNM') },
   { key: 'yt-JGG5Lryi0Hg', url: 'https://youtu.be/JGG5Lryi0Hg', thumb: ytThumb('JGG5Lryi0Hg') },
   { key: 'yt-moCImK_W5II', url: 'https://youtu.be/moCImK_W5II', thumb: ytThumb('moCImK_W5II') },
-  { key: 'yt-0fVuoEDo4EI', url: 'https://youtu.be/0fVuoEDo4EI', thumb: ytThumb('0fVuoEDo4EI') },
+  { key: 'yt-b6gZbmceT7s', url: 'https://youtu.be/b6gZbmceT7s', thumb: ytThumb('b6gZbmceT7s') },
   { key: 'yt-ZnDBqPRPWos', url: 'https://youtu.be/ZnDBqPRPWos', thumb: ytThumb('ZnDBqPRPWos') },
 ];
 
@@ -33,7 +33,7 @@ const MOTION_VIDEOS: SliderVideo[] = [
   { key: 'yt-_wfHC5LTrqU', url: 'https://youtu.be/_wfHC5LTrqU', thumb: ytThumb('_wfHC5LTrqU') },
   { key: 'yt-jaZas0ZlTaA', url: 'https://youtu.be/jaZas0ZlTaA', thumb: ytThumb('jaZas0ZlTaA') },
   { key: 'yt-M1SN7xeCzYw', url: 'https://youtu.be/M1SN7xeCzYw', thumb: ytThumb('M1SN7xeCzYw') },
-  { key: 'yt-2ECIyDdNgvg', url: 'https://youtu.be/2ECIyDdNgvg', thumb: ytThumb('2ECIyDdNgvg') },
+  { key: 'yt-HqX4QeXxXcI', url: 'https://youtu.be/HqX4QeXxXcI', thumb: ytThumb('HqX4QeXxXcI') },
 ];
 
 export default function Works({ colorMode }: { colorMode: ColorMode }) {
