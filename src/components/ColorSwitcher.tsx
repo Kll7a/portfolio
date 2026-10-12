@@ -7,14 +7,18 @@ interface Props {
 }
 
 export default function ColorSwitcher({ current, onChange }: Props) {
-  const modes: { id: ColorMode; color: string } = [
+  const modes: { id: ColorMode; color: string }[] = [
     { id: 'violet', color: '#8b5cf6' },
     { id: 'orange', color: '#f97316' },
     { id: 'aqua', color: '#2dd4bf' },
   ];
 
   return (
-    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-full p-1.5 flex items-center gap-2 shadow-xl">
+    <div
+      role="group"
+      aria-label="Color theme"
+      className="bg-black/40 backdrop-blur-md border border-white/10 rounded-full p-1.5 flex items-center gap-2 shadow-xl"
+    >
       {modes.map((mode) => (
         <button
           key={mode.id}
@@ -22,6 +26,8 @@ export default function ColorSwitcher({ current, onChange }: Props) {
           className="relative w-6 h-6 md:w-8 md:h-8 rounded-full transition-transform hover:scale-110 flex items-center justify-center cursor-pointer"
           style={{ backgroundColor: mode.color }}
           aria-label={`Switch to ${mode.id} theme`}
+          aria-pressed={current === mode.id}
+          title={`${mode.id.charAt(0).toUpperCase()}${mode.id.slice(1)} theme`}
         >
           {current === mode.id && (
             <motion.div

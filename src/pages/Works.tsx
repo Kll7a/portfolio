@@ -60,11 +60,11 @@ export default function Works({ colorMode }: { colorMode: ColorMode }) {
           href="https://t.me/cringearchitect"
           target="_blank"
           rel="noreferrer"
-          className="px-6 py-2 rounded-full font-bold text-xs tracking-wider transition-transform hover:scale-105 active:scale-95 w-max shadow-xl flex flex-col items-center justify-center cursor-pointer"
+          className="px-6 py-2.5 rounded-full font-bold text-sm tracking-wider transition-transform hover:scale-105 active:scale-95 w-max shadow-xl flex flex-col items-center justify-center cursor-pointer"
           style={{ backgroundColor: 'var(--theme-color)', color: '#fff' }}
         >
           <span>CONTACT ME</span>
-          <span className="text-[8px] font-normal opacity-80 mt-0.5">FOR MORE INFORMATION</span>
+          <span className="text-xs font-normal opacity-90 mt-0.5">FOR MORE INFORMATION</span>
         </a>
       </div>
     </div>

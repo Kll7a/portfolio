@@ -1,8 +1,34 @@
 import { Mail, Send, Phone, MapPin } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { ColorMode } from '../App';
 
 export default function Main({ colorMode }: { colorMode: ColorMode }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // React doesn't always render the `muted` attribute, which can make browsers block autoplay: force it and start playback
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+
+    // Browsers may defer autoplay (e.g. while the tab is in the background): retry once the video can play / the tab is shown
+    const tryPlay = () => {
+      if (video.paused) video.play().catch(() => {});
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') tryPlay();
+    };
+
+    tryPlay();
+    video.addEventListener('canplay', tryPlay);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      video.removeEventListener('canplay', tryPlay);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
+
   return (
     <div className="min-h-full flex flex-col md:flex-row items-center justify-between gap-8 pb-24 md:pb-0">
       <div className="flex-1 flex flex-col justify-center max-w-2xl z-10 w-full">
@@ -23,12 +49,18 @@ export default function Main({ colorMode }: { colorMode: ColorMode }) {
       
       <div className="flex-1 h-full flex items-center justify-center md:justify-end relative w-full mt-8 md:mt-0">
         <div className="w-full max-w-[320px] md:max-w-[400px] aspect-[3/4] rounded-[2rem] overflow-hidden relative group shadow-2xl opacity-90">
-          <img
-            src="/portfolio/photo/photo_black.jpg"
-            alt="Kirill"
-            className="w-full h-full object-cover"
-            loading="eager"
-            draggable={false}
+          <video
+            ref={videoRef}
+            src="/portfolio/photo/AI_generation_video.mp4"
+            poster="/portfolio/photo/photo_black.jpg"
+            className="w-full h-full object-cover object-top"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            aria-label="Kirill"
           />
           <div className="absolute inset-0 pointer-events-none border border-white/10 rounded-[2rem] transition-colors group-hover:border-white/20" />
         </div>

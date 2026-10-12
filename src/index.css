@@ -12,6 +12,27 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  /* Thin, low-contrast scrollbar: stays visible as a "there is more below" cue */
+  .scrollbar-subtle {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  }
+  .scrollbar-subtle::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-subtle::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 9999px;
+  }
+  .scrollbar-subtle::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/* Keyboard focus ring in the current theme color (mouse clicks don't show it) */
+:focus-visible {
+  outline: 2px solid var(--theme-color);
+  outline-offset: 3px;
 }
 
 :root {
