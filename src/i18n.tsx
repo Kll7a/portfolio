@@ -17,7 +17,7 @@ const en = {
   main: {
     eyebrow: 'Portfolio',
     role: '2D / 3D graphic & motion designer',
-    pitch: 'I take brands from idea to the final frame: concept, shoot, animation, VFX and every resize your campaign needs.',
+    pitch: 'From idea to the final frame: concept, SFX, VFX, animation, static visuals and every resize you need.',
     contactMe: 'Contact me',
     viewWorks: 'View works',
     location: 'Uzbekistan, Tashkent',
@@ -62,7 +62,7 @@ const en = {
         title: 'Digital / PR',
         tagline: 'Content that builds brand awareness and keeps you on screen.',
         services: [
-          '2D, 3D and Lottie (JSON) animation',
+          '2D and 3D animation',
           '3D modeling to brief',
           'Resizing for every placement per the digital brief and budget',
           'Awareness campaigns — reach and recognition, not hard selling',
@@ -79,9 +79,23 @@ const en = {
           'Product shots and product visualization',
         ],
       },
+      {
+        title: 'Lottie / Telegram',
+        tagline: 'Lightweight animations for apps and Telegram that make a brand recognizable and a joy to use.',
+        services: [
+          'Lottie (JSON) animations for apps and interfaces',
+          'Animated Telegram stickers and custom emoji',
+          'Your brand in every chat — recognition through everyday use',
+          'Small files that play smoothly on any device',
+        ],
+      },
     ],
     whatIDo: 'What I do',
+    appAnimations: 'App animations · Lottie',
+    telegramStickers: 'Telegram stickers & emoji',
+    sticker: (name: string) => `Sticker: ${name}`,
     videos: (n: number) => `${n} videos`,
+    animations: (n: number) => `${n} animations`,
     play: (category: string, n: number) => `Play ${category} video ${n}`,
     ctaTitle: 'Questions or proposals?',
     ctaText: 'Message me on Telegram — I’ll do my best to reply quickly.',
@@ -94,6 +108,10 @@ const en = {
 };
 
 type Dict = typeof en;
+
+// 1 ролик, 2 ролика, 5 роликов
+const ruPlural = (n: number, one: string, few: string, many: string) =>
+  n % 10 === 1 && n % 100 !== 11 ? one : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? few : many;
 
 const ru: Dict = {
   meta: {
@@ -109,7 +127,7 @@ const ru: Dict = {
   main: {
     eyebrow: 'Портфолио',
     role: '2D-3D графический и моушен‑дизайнер',
-    pitch: 'Веду бренд от идеи до финального кадра: концепция, съёмка, анимация, VFX и все ресайзы для кампании.',
+    pitch: 'От идеи до финального кадра: концепция, SFX, VFX, анимация, статика и все необходимые ресайзы.',
     contactMe: 'Связаться',
     viewWorks: 'Смотреть работы',
     location: 'Узбекистан, Ташкент',
@@ -154,7 +172,7 @@ const ru: Dict = {
         title: 'Digital / PR',
         tagline: 'Контент, который работает на узнаваемость бренда.',
         services: [
-          'Анимация 2D, 3D и Lottie (JSON)',
+          'Анимация 2D и 3D',
           '3D-моделирование по брифу',
           'Ресайзы под все площадки согласно диджитал-брифу и бюджету',
           'Имиджевое продвижение — охват и узнаваемость без прямых продаж',
@@ -171,9 +189,23 @@ const ru: Dict = {
           'Продуктовая часть: пэкшоты и визуализация продукта',
         ],
       },
+      {
+        title: 'Lottie / Telegram',
+        tagline: 'Лёгкие анимации для приложений и Telegram — для узнаваемости бренда и удобства пользователей.',
+        services: [
+          'Lottie (JSON) анимации для приложений и интерфейсов',
+          'Анимированные стикеры и эмодзи для Telegram',
+          'Бренд в каждом чате — узнаваемость через ежедневное использование',
+          'Лёгкие файлы с плавным воспроизведением на любом устройстве',
+        ],
+      },
     ],
     whatIDo: 'Что я делаю',
-    videos: (n: number) => `${n} ${n % 10 === 1 && n % 100 !== 11 ? 'ролик' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'ролика' : 'роликов'}`,
+    appAnimations: 'Анимации для приложений · Lottie',
+    telegramStickers: 'Стикеры и эмодзи для Telegram',
+    sticker: (name: string) => `Стикер: ${name}`,
+    videos: (n: number) => `${n} ${ruPlural(n, 'ролик', 'ролика', 'роликов')}`,
+    animations: (n: number) => `${n} ${ruPlural(n, 'анимация', 'анимации', 'анимаций')}`,
     play: (category: string, n: number) => `Смотреть ${category}, ролик ${n}`,
     ctaTitle: 'Есть вопросы или предложения?',
     ctaText: 'Пишите мне в Telegram — постараюсь оперативно ответить.',

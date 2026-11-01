@@ -1,4 +1,4 @@
-import { Check, ChevronLeft, ChevronRight, Clapperboard, ExternalLink, Megaphone, Play, Send, Sparkles, X } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Clapperboard, ExternalLink, Megaphone, Play, Send, Smile, Sparkles, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
@@ -6,7 +6,8 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useI18n } from '../i18n';
 import { TELEGRAM_URL } from './Main';
 
-type SliderVideo = { key: string; url: string; thumb: string; alt?: string };
+// zoom: scales the thumbnail inside its frame, for covers that have bars around the picture
+type SliderVideo = { key: string; url: string; thumb: string; alt?: string; zoom?: number };
 
 // keys are `yt-<videoId>`
 const ytId = (video: SliderVideo) => video.key.replace(/^yt-/, '');
@@ -32,7 +33,6 @@ const DIGITAL_PR_VIDEOS: SliderVideo[] = [
   { key: 'yt-JGG5Lryi0Hg', url: 'https://youtu.be/JGG5Lryi0Hg', thumb: ytThumb('JGG5Lryi0Hg') },
   { key: 'yt-moCImK_W5II', url: 'https://youtu.be/moCImK_W5II', thumb: ytThumb('moCImK_W5II') },
   { key: 'yt-b6gZbmceT7s', url: 'https://youtu.be/b6gZbmceT7s', thumb: ytThumb('b6gZbmceT7s') },
-  { key: 'yt-ZnDBqPRPWos', url: 'https://youtu.be/ZnDBqPRPWos', thumb: ytThumb('ZnDBqPRPWos') },
 ];
 
 const MOTION_VIDEOS: SliderVideo[] = [
@@ -44,13 +44,32 @@ const MOTION_VIDEOS: SliderVideo[] = [
   { key: 'yt-HqX4QeXxXcI', url: 'https://youtu.be/HqX4QeXxXcI', thumb: ytThumb('HqX4QeXxXcI') },
 ];
 
+const LOTTIE_VIDEOS: SliderVideo[] = [
+  { key: 'yt-ZnDBqPRPWos', url: 'https://youtu.be/ZnDBqPRPWos', thumb: ytThumb('ZnDBqPRPWos') },
+  { key: 'yt-0fVuoEDo4EI', url: 'https://youtu.be/0fVuoEDo4EI', thumb: ytThumb('0fVuoEDo4EI'), zoom: 1.3 },
+];
+
+// Telegram video stickers (512×512 WebM with transparency) from /public/telegram_stickers; the name after the number is the label
+const TELEGRAM_STICKERS = [
+  '02_laptop',
+  '04_sleep',
+  '05_tongue',
+  '06_phone',
+  '07_time',
+  '08_cool',
+  '09_pray',
+  '10_facepalm',
+  '11_fly',
+];
+
 // Order matches t.works.categories (titles, taglines and service lists live in i18n.tsx)
-type Category = { videos: SliderVideo[]; isVertical: boolean; icon: ReactNode };
+type Category = { videos: SliderVideo[]; isVertical: boolean; icon: ReactNode; stickers?: string[] };
 
 const CATEGORIES: Category[] = [
   { videos: PRODUCTION_VIDEOS, isVertical: false, icon: <Clapperboard size={18} aria-hidden="true" /> },
   { videos: DIGITAL_PR_VIDEOS, isVertical: true, icon: <Megaphone size={18} aria-hidden="true" /> },
   { videos: MOTION_VIDEOS, isVertical: false, icon: <Sparkles size={18} aria-hidden="true" /> },
+  { videos: LOTTIE_VIDEOS, isVertical: true, icon: <Smile size={18} aria-hidden="true" />, stickers: TELEGRAM_STICKERS },
 ];
 
 export default function Works() {
@@ -63,6 +82,33 @@ export default function Works() {
       <div className="w-full z-10 relative flex flex-col gap-4 xl:gap-5">
         {CATEGORIES.map((category, categoryIndex) => {
           const copy = t.works.categories[categoryIndex];
+          const videoTiles = category.videos.map((video, index) => (
+            <button
+              key={video.key}
+              type="button"
+              onClick={() => setOpen({ category: categoryIndex, index })}
+              aria-haspopup="dialog"
+              aria-label={t.works.play(copy.title, index + 1)}
+              className={`group/video relative block w-full overflow-hidden rounded-xl border border-white/10 bg-white/5 hover:border-white/30 transition-colors cursor-pointer ${
+                category.isVertical ? 'aspect-[9/16]' : 'aspect-video'
+              }`}
+            >
+              <img
+                src={video.thumb}
+                alt=""
+                className="w-full h-full object-cover"
+                style={video.zoom ? { transform: `scale(${video.zoom})` } : undefined}
+                loading="lazy"
+                draggable={false}
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover/video:opacity-100 group-focus-visible/video:opacity-100 transition-opacity">
+                <div className="btn-primary w-11 h-11 rounded-full flex items-center justify-center">
+                  <Play size={18} className="ml-0.5" fill="currentColor" aria-hidden="true" />
+                </div>
+              </div>
+            </button>
+          ));
+          const count = category.videos.length + (category.stickers?.length ?? 0);
           return (
             <section key={copy.title} className="glass-card rounded-3xl p-5 md:p-7">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 mb-6">
@@ -70,7 +116,8 @@ export default function Works() {
                   <div className="flex items-center gap-2.5 mb-3" style={{ color: 'var(--theme-color)' }}>
                     {category.icon}
                     <span className="text-xs font-bold uppercase tracking-[0.2em]">
-                      {String(categoryIndex + 1).padStart(2, '0')} · {t.works.videos(category.videos.length)}
+                      {String(categoryIndex + 1).padStart(2, '0')} ·{' '}
+                      {category.stickers ? t.works.animations(count) : t.works.videos(count)}
                     </span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-2">{copy.title}</h2>
@@ -90,27 +137,26 @@ export default function Works() {
                 </div>
               </div>
 
-              <div className={`grid gap-3 ${category.isVertical ? 'grid-cols-4 lg:grid-cols-8' : 'grid-cols-2 md:grid-cols-3'}`}>
-                {category.videos.map((video, index) => (
-                  <button
-                    key={video.key}
-                    type="button"
-                    onClick={() => setOpen({ category: categoryIndex, index })}
-                    aria-haspopup="dialog"
-                    aria-label={t.works.play(copy.title, index + 1)}
-                    className={`group/video relative block w-full overflow-hidden rounded-xl border border-white/10 bg-white/5 hover:border-white/30 transition-colors cursor-pointer ${
-                      category.isVertical ? 'aspect-[9/16]' : 'aspect-video'
-                    }`}
-                  >
-                    <img src={video.thumb} alt="" className="w-full h-full object-cover" loading="lazy" draggable={false} />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover/video:opacity-100 group-focus-visible/video:opacity-100 transition-opacity">
-                      <div className="btn-primary w-11 h-11 rounded-full flex items-center justify-center">
-                        <Play size={18} className="ml-0.5" fill="currentColor" aria-hidden="true" />
-                      </div>
+              {category.stickers ? (
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                  <div className="lg:col-span-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-white/60 mb-3">{t.works.appAnimations}</p>
+                    <div className="grid grid-cols-2 gap-3 max-w-sm lg:max-w-none">{videoTiles}</div>
+                  </div>
+                  <div className="lg:col-span-8">
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-white/60 mb-3">{t.works.telegramStickers}</p>
+                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+                      {category.stickers.map((sticker) => (
+                        <StickerTile key={sticker} name={sticker} label={t.works.sticker(sticker.replace(/^\d+_/, ''))} />
+                      ))}
                     </div>
-                  </button>
-                ))}
-              </div>
+                  </div>
+                </div>
+              ) : (
+                <div className={`grid gap-3 ${category.isVertical ? 'grid-cols-4 lg:grid-cols-7' : 'grid-cols-2 md:grid-cols-3'}`}>
+                  {videoTiles}
+                </div>
+              )}
             </section>
           );
         })}
@@ -161,6 +207,34 @@ export default function Works() {
         </AnimatePresence>,
         document.body,
       )}
+    </div>
+  );
+}
+
+function StickerTile({ name, label }: { name: string; label: string; key?: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Same autoplay workaround as the main page video: React doesn't always render `muted`, so set it before playing
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(() => {});
+  }, []);
+
+  return (
+    <div className="aspect-square rounded-xl bg-black/20 border border-white/[0.06] p-2 sm:p-3 flex items-center justify-center">
+      <video
+        ref={videoRef}
+        src={`/portfolio/telegram_stickers/${name}.webm`}
+        className="w-full h-full object-contain"
+        autoPlay
+        loop
+        muted
+        playsInline
+        disablePictureInPicture
+        aria-label={label}
+      />
     </div>
   );
 }
