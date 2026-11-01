@@ -5,7 +5,7 @@ export type Lang = 'en' | 'ru';
 
 const en = {
   meta: {
-    title: 'I.Kirill — Motion, 3D & Production Portfolio',
+    title: 'I.Kirill — Portfolio',
   },
   nav: {
     label: 'Main navigation',
@@ -16,7 +16,7 @@ const en = {
   },
   main: {
     eyebrow: 'Portfolio',
-    role: 'Motion & 3D designer · Creative production',
+    role: '2D / 3D graphic & motion designer',
     pitch: 'I take brands from idea to the final frame: concept, shoot, animation, VFX and every resize your campaign needs.',
     contactMe: 'Contact me',
     viewWorks: 'View works',
@@ -83,8 +83,8 @@ const en = {
     whatIDo: 'What I do',
     videos: (n: number) => `${n} videos`,
     play: (category: string, n: number) => `Play ${category} video ${n}`,
-    ctaTitle: 'Have a project in mind?',
-    ctaText: 'Tell me about your brief — I’ll reply within a day.',
+    ctaTitle: 'Questions or proposals?',
+    ctaText: 'Message me on Telegram — I’ll do my best to reply quickly.',
     ctaButton: 'Contact me',
     close: 'Close video',
     prev: 'Previous video',
@@ -97,7 +97,7 @@ type Dict = typeof en;
 
 const ru: Dict = {
   meta: {
-    title: 'I.Kirill — портфолио: моушн, 3D и продакшн',
+    title: 'I.Kirill — портфолио',
   },
   nav: {
     label: 'Основная навигация',
@@ -108,7 +108,7 @@ const ru: Dict = {
   },
   main: {
     eyebrow: 'Портфолио',
-    role: 'Моушн- и 3D-дизайнер · Креативный продакшн',
+    role: '2D-3D графический и моушен‑дизайнер',
     pitch: 'Веду бренд от идеи до финального кадра: концепция, съёмка, анимация, VFX и все ресайзы для кампании.',
     contactMe: 'Связаться',
     viewWorks: 'Смотреть работы',
@@ -175,8 +175,8 @@ const ru: Dict = {
     whatIDo: 'Что я делаю',
     videos: (n: number) => `${n} ${n % 10 === 1 && n % 100 !== 11 ? 'ролик' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'ролика' : 'роликов'}`,
     play: (category: string, n: number) => `Смотреть ${category}, ролик ${n}`,
-    ctaTitle: 'Есть проект?',
-    ctaText: 'Расскажите о задаче — отвечу в течение дня.',
+    ctaTitle: 'Есть вопросы или предложения?',
+    ctaText: 'Пишите мне в Telegram — постараюсь оперативно ответить.',
     ctaButton: 'Связаться',
     close: 'Закрыть видео',
     prev: 'Предыдущее видео',
