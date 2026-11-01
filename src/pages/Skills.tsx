@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import type { ReactNode } from 'react';
+import { useI18n } from '../i18n';
 import { Award, Brain, ChevronLeft, ChevronRight, ExternalLink, GraduationCap, Layers, Send, Users, X, ZoomIn } from 'lucide-react';
 
 type HardSkill = { id: string; name: string; file: string; cover?: boolean };
@@ -24,29 +25,15 @@ const chatgpt: HardSkill = { id: 'chatgpt', name: 'ChatGPT', file: 'ChatGPT.png'
 const claude: HardSkill = { id: 'claude', name: 'Claude', file: 'Claude.png' };
 const gemini: HardSkill = { id: 'gemini', name: 'Gemini', file: 'Gemini.svg' };
 
-const hardSkillRows: { title: string; skills: HardSkill[] }[][] = [
+const hardSkillRows: { title: 'video' | 'dev' | 'design' | 'ai'; skills: HardSkill[] }[][] = [
   [
-    { title: '3D & Video', skills: [blender, afterEffects, premiere, unreal] },
-    { title: 'Dev & Office', skills: [vscode, github, cursor, m365] },
+    { title: 'video', skills: [blender, afterEffects, premiere, unreal] },
+    { title: 'dev', skills: [vscode, github, cursor, m365] },
   ],
   [
-    { title: 'Design', skills: [photoshop, illustrator, corel, figma, gwd] },
-    { title: 'AI', skills: [chatgpt, claude, gemini] },
+    { title: 'design', skills: [photoshop, illustrator, corel, figma, gwd] },
+    { title: 'ai', skills: [chatgpt, claude, gemini] },
   ],
-];
-
-const softSkills = [
-  'Cross-functional Communication',
-  'Coordination',
-  'Project Thinking',
-  'Self-directed Learning',
-];
-
-const mindset = [
-  'Analytical Thinking',
-  'Systems Thinking',
-  'Pragmatism',
-  'Tech-Savvy + Creativity',
 ];
 
 type Certificate = {
@@ -92,6 +79,7 @@ const certificates: Certificate[] = [
 const certificateSrc = (cert: Certificate) => `/portfolio/certificates/cropped/${encodeURI(cert.file)}`;
 
 export default function Skills() {
+  const { t } = useI18n();
   const [openCertificate, setOpenCertificate] = useState<number | null>(null);
 
   return (
@@ -100,39 +88,38 @@ export default function Skills() {
       <div className="w-full z-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-4 xl:gap-5">
         <div className="contents xl:flex xl:flex-col xl:gap-5 xl:col-span-4">
           <GlassCard className="order-1 md:col-span-2 xl:order-none">
-            <CardTitle icon={<GraduationCap size={16} aria-hidden="true" />}>Education</CardTitle>
+            <CardTitle icon={<GraduationCap size={16} aria-hidden="true" />}>{t.skills.education}</CardTitle>
             <ul className="space-y-5">
-              <EducationItem school="MKKT College" detail="Major in Computer Maintenance" />
+              <EducationItem school={t.skills.mkkt} detail={t.skills.mkktDetail} />
               <EducationItem
-                school="Puchon University"
-                detail="Majoring in the Internet of Things"
-                note="Currently continuing my studies"
+                school={t.skills.puchon}
+                detail={t.skills.puchonDetail}
+                note={t.skills.puchonNote}
               />
             </ul>
           </GlassCard>
 
           <GlassCard className="order-3 xl:order-none xl:flex-1">
-            <CardTitle icon={<Users size={16} aria-hidden="true" />}>Soft Skills</CardTitle>
-            <ChipList items={softSkills} />
+            <CardTitle icon={<Users size={16} aria-hidden="true" />}>{t.skills.softSkills}</CardTitle>
+            <ChipList items={t.skills.softSkillsList} />
           </GlassCard>
 
           <GlassCard className="order-4 xl:order-none xl:flex-1">
-            <CardTitle icon={<Brain size={16} aria-hidden="true" />}>Mindset</CardTitle>
-            <ChipList items={mindset} />
+            <CardTitle icon={<Brain size={16} aria-hidden="true" />}>{t.skills.mindset}</CardTitle>
+            <ChipList items={t.skills.mindsetList} />
           </GlassCard>
 
           <a
             href="https://t.me/cringearchitect"
             target="_blank"
             rel="noreferrer"
-            className="order-6 md:col-span-2 xl:order-none group flex items-center justify-between gap-4 rounded-3xl px-6 py-4 shadow-xl transition-transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-            style={{ backgroundColor: 'var(--theme-color)', color: '#fff' }}
+            className="btn-primary order-6 md:col-span-2 xl:order-none group flex items-center justify-between gap-4 rounded-3xl px-6 py-4 shadow-xl transition-transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
             <span className="flex flex-col leading-tight">
-              <span className="text-sm font-bold tracking-wider">CONTACT ME</span>
-              <span className="text-xs font-normal opacity-90 mt-0.5">FOR MORE INFORMATION</span>
+              <span className="text-base font-bold">{t.skills.contactTitle}</span>
+              <span className="text-sm font-medium opacity-80 mt-0.5">{t.skills.contactSubtitle}</span>
             </span>
-            <span className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+            <span className="w-10 h-10 rounded-full bg-black/15 flex items-center justify-center transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
               <Send size={18} aria-hidden="true" />
             </span>
           </a>
@@ -140,7 +127,7 @@ export default function Skills() {
 
         <div className="contents xl:flex xl:flex-col xl:gap-5 xl:col-span-8">
           <GlassCard className="order-2 md:col-span-2 xl:order-none">
-            <CardTitle icon={<Layers size={16} aria-hidden="true" />}>Hard Skills</CardTitle>
+            <CardTitle icon={<Layers size={16} aria-hidden="true" />}>{t.skills.hardSkills}</CardTitle>
             <div className="space-y-3">
               {hardSkillRows.map((row) => (
                 <div key={row[0].title} className="flex flex-col @xl:flex-row gap-3">
@@ -150,7 +137,7 @@ export default function Skills() {
                       style={{ flexGrow: group.skills.length }}
                       className="basis-0 min-w-0 rounded-2xl bg-black/20 border border-white/[0.06] p-3"
                     >
-                      <p className="text-[11px] font-semibold uppercase tracking-widest text-white/50 mb-3">{group.title}</p>
+                      <p className="text-[11px] font-semibold uppercase tracking-widest text-white/60 mb-3">{t.skills.groups[group.title]}</p>
                       <div className="flex flex-wrap gap-y-3">
                         {group.skills.map((skill) => (
                           <HardSkillTile key={skill.id} skill={skill} />
@@ -164,7 +151,7 @@ export default function Skills() {
           </GlassCard>
 
           <GlassCard className="order-5 md:col-span-2 xl:order-none xl:flex-1">
-            <CardTitle icon={<Award size={16} aria-hidden="true" />}>Certificates</CardTitle>
+            <CardTitle icon={<Award size={16} aria-hidden="true" />}>{t.skills.certificates}</CardTitle>
             <div className="grid grid-cols-2 @xl:grid-cols-4 gap-3">
               {certificates.map((cert, index) => (
                 <button
@@ -172,7 +159,7 @@ export default function Skills() {
                   type="button"
                   onClick={() => setOpenCertificate(index)}
                   aria-haspopup="dialog"
-                  aria-label={`View certificate: ${cert.issuer} — ${cert.title}`}
+                  aria-label={`${t.skills.viewCertificate}: ${cert.issuer} — ${cert.title}`}
                   className="flex flex-col gap-2 group text-left cursor-pointer"
                 >
                   <div className="relative w-full aspect-[1198/928] rounded-xl overflow-hidden bg-white/5 border border-white/15 transition-all duration-300 group-hover:border-white/30 group-hover:-translate-y-1">
@@ -299,6 +286,7 @@ function CertificateLightbox({
   onClose: () => void;
   onNavigate: (delta: number) => void;
 }) {
+  const { t } = useI18n();
   const cert = certificates[index];
   const dialogRef = useRef<HTMLDivElement>(null);
   const handlers = useRef({ onClose, onNavigate });
@@ -380,7 +368,7 @@ function CertificateLightbox({
               </p>
               <h2 className="text-lg sm:text-xl font-semibold text-white leading-snug">{cert.title}</h2>
             </div>
-            <button type="button" onClick={onClose} className={`${iconButton} shrink-0`} aria-label="Close certificate">
+            <button type="button" onClick={onClose} className={`${iconButton} shrink-0`} aria-label={t.skills.closeCertificate}>
               <X size={20} aria-hidden="true" />
             </button>
           </div>
@@ -397,13 +385,13 @@ function CertificateLightbox({
 
           <div className="flex flex-wrap items-center justify-between gap-3 mt-4">
             <div className="flex items-center gap-3">
-              <button type="button" onClick={() => onNavigate(-1)} className={iconButton} aria-label="Previous certificate">
+              <button type="button" onClick={() => onNavigate(-1)} className={iconButton} aria-label={t.skills.prevCertificate}>
                 <ChevronLeft size={20} aria-hidden="true" />
               </button>
               <span className="text-sm text-white/70 tabular-nums" aria-live="polite">
                 {index + 1} / {certificates.length}
               </span>
-              <button type="button" onClick={() => onNavigate(1)} className={iconButton} aria-label="Next certificate">
+              <button type="button" onClick={() => onNavigate(1)} className={iconButton} aria-label={t.skills.nextCertificate}>
                 <ChevronRight size={20} aria-hidden="true" />
               </button>
             </div>
@@ -411,10 +399,9 @@ function CertificateLightbox({
               href={cert.verifyUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-transform hover:scale-105 active:scale-95"
-              style={{ backgroundColor: 'var(--theme-color)', color: '#fff' }}
+              className="btn-primary inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-transform hover:scale-105 active:scale-95"
             >
-              Verify on Coursera
+              {t.skills.verify}
               <ExternalLink size={16} aria-hidden="true" />
             </a>
           </div>

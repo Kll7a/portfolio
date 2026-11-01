@@ -1,8 +1,10 @@
-import { ChevronLeft, ChevronRight, ExternalLink, Play, X } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Clapperboard, ExternalLink, Megaphone, Play, Send, Sparkles, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
+import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
+import { useI18n } from '../i18n';
+import { TELEGRAM_URL } from './Main';
 
 type SliderVideo = { key: string; url: string; thumb: string; alt?: string };
 
@@ -12,7 +14,6 @@ const ytEmbedSrc = (video: SliderVideo) =>
   `https://www.youtube-nocookie.com/embed/${ytId(video)}?autoplay=1&rel=0&modestbranding=1`;
 
 const ytThumb = (id: string) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-const driveThumb = (id: string) => `https://drive.google.com/thumbnail?id=${id}&sz=w640`;
 
 const PRODUCTION_VIDEOS: SliderVideo[] = [
   { key: 'yt-4mtjLr5kH5E', url: 'https://youtu.be/4mtjLr5kH5E', thumb: ytThumb('4mtjLr5kH5E') },
@@ -43,105 +44,94 @@ const MOTION_VIDEOS: SliderVideo[] = [
   { key: 'yt-HqX4QeXxXcI', url: 'https://youtu.be/HqX4QeXxXcI', thumb: ytThumb('HqX4QeXxXcI') },
 ];
 
-type Category = { title: string; videos: SliderVideo[]; isVertical: boolean };
+// Order matches t.works.categories (titles, taglines and service lists live in i18n.tsx)
+type Category = { videos: SliderVideo[]; isVertical: boolean; icon: ReactNode };
 
 const CATEGORIES: Category[] = [
-  { title: 'PRODUCTION', videos: PRODUCTION_VIDEOS, isVertical: false },
-  { title: 'DIGITAL / PR', videos: DIGITAL_PR_VIDEOS, isVertical: true },
-  { title: 'MOTION', videos: MOTION_VIDEOS, isVertical: false },
+  { videos: PRODUCTION_VIDEOS, isVertical: false, icon: <Clapperboard size={18} aria-hidden="true" /> },
+  { videos: DIGITAL_PR_VIDEOS, isVertical: true, icon: <Megaphone size={18} aria-hidden="true" /> },
+  { videos: MOTION_VIDEOS, isVertical: false, icon: <Sparkles size={18} aria-hidden="true" /> },
 ];
 
-type Work = { category: number; index: number; video: SliderVideo };
-
-// Spread the categories evenly through one list so neighbours on the page are rarely from the same category
-const WORKS: Work[] = CATEGORIES.flatMap((category, categoryIndex) =>
-  category.videos.map((video, index) => ({
-    category: categoryIndex,
-    index,
-    video,
-    position: (index + 0.5) / category.videos.length,
-  })),
-)
-  .sort((a, b) => a.position - b.position || a.category - b.category)
-  .map(({ category, index, video }) => ({ category, index, video }));
-
-// Hand-picked "scattered but tidy" look. Each list is cycled with a different length so the pattern never visibly repeats.
-// Tailwind needs full class names, so the widths are written out: % on phones, px from `md`.
-const LANDSCAPE_WIDTHS = ['w-[46%] md:w-[250px]', 'w-[56%] md:w-[330px]', 'w-[40%] md:w-[200px]', 'w-[50%] md:w-[285px]'];
-const PORTRAIT_WIDTHS = ['w-[27%] md:w-[135px]', 'w-[32%] md:w-[165px]', 'w-[24%] md:w-[120px]', 'w-[30%] md:w-[150px]'];
-const OFFSETS_Y = [0, 22, -10, 30, 8, -16, 26, 2, 14, -6];
-const OFFSETS_X = [0, 6, -4, 8, -2, 4, -6];
-const TILTS = [-2, 1.5, 0, -1, 2.5, -1.5, 1, 0.5];
-const FLOAT_AMPLITUDES = [7, 11, 9, 13, 8];
-const FLOAT_DURATIONS = [5.2, 6.4, 4.6, 7.1, 5.8, 6.9];
-
 export default function Works() {
-  const reduceMotion = useReducedMotion();
+  const { t } = useI18n();
   const [open, setOpen] = useState<{ category: number; index: number } | null>(null);
   const openCategory = open ? CATEGORIES[open.category] : null;
 
   return (
-    <div className="min-h-full flex items-center justify-center pb-24 md:pb-0">
-      <div className="w-full flex flex-wrap items-center justify-center gap-x-4 gap-y-6 md:gap-x-7 md:gap-y-10 px-1 py-4 z-10">
-        {WORKS.map((work, i) => {
-          const category = CATEGORIES[work.category];
-          const widths = category.isVertical ? PORTRAIT_WIDTHS : LANDSCAPE_WIDTHS;
+    <div className="min-h-full pb-24 md:pb-0">
+      <div className="w-full z-10 relative flex flex-col gap-4 xl:gap-5">
+        {CATEGORIES.map((category, categoryIndex) => {
+          const copy = t.works.categories[categoryIndex];
           return (
-            <div
-              key={work.video.key}
-              className={`relative hover:z-20 ${widths[i % widths.length]}`}
-              style={{
-                marginTop: OFFSETS_Y[i % OFFSETS_Y.length],
-                marginLeft: OFFSETS_X[i % OFFSETS_X.length],
-                transform: `rotate(${TILTS[i % TILTS.length]}deg)`,
-              }}
-            >
-              {/* Levitation: pure CSS (see .work-float), so it runs on the GPU and ignores the "reduce motion" system flag on purpose */}
-              <div
-                className="work-float"
-                style={
-                  {
-                    '--float-y': `${FLOAT_AMPLITUDES[i % FLOAT_AMPLITUDES.length]}px`,
-                    '--float-duration': `${FLOAT_DURATIONS[i % FLOAT_DURATIONS.length]}s`,
-                    // negative delay = every card starts mid-cycle, so they are out of phase from the first frame
-                    '--float-delay': `-${((i * 1.7) % FLOAT_DURATIONS[i % FLOAT_DURATIONS.length]).toFixed(2)}s`,
-                  } as CSSProperties
-                }
-              >
-                <motion.button
-                  type="button"
-                  onClick={() => setOpen({ category: work.category, index: work.index })}
-                  aria-label={`Play ${category.title} video ${work.index + 1}`}
-                  whileHover={reduceMotion ? undefined : { scale: 1.06 }}
-                  whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                  className={`group/video relative block w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8)] hover:border-white/30 transition-colors cursor-pointer ${
-                    category.isVertical ? 'aspect-[9/16]' : 'aspect-video'
-                  }`}
-                >
-                  <img
-                    src={work.video.thumb}
-                    alt={work.video.alt ?? `${category.title} video`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    draggable={false}
-                  />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-t from-black/70 via-black/30 to-black/30 opacity-0 group-hover/video:opacity-100 group-focus-visible/video:opacity-100 transition-opacity duration-300">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30">
-                      <Play size={18} className="text-white ml-0.5" fill="currentColor" aria-hidden="true" />
-                    </div>
-                    <span
-                      className="absolute bottom-2 left-3 text-[10px] font-bold tracking-[0.18em]"
-                      style={{ color: 'var(--theme-color)' }}
-                    >
-                      {category.title}
+            <section key={copy.title} className="glass-card rounded-3xl p-5 md:p-7">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 mb-6">
+                <div className="lg:col-span-5">
+                  <div className="flex items-center gap-2.5 mb-3" style={{ color: 'var(--theme-color)' }}>
+                    {category.icon}
+                    <span className="text-xs font-bold uppercase tracking-[0.2em]">
+                      {String(categoryIndex + 1).padStart(2, '0')} · {t.works.videos(category.videos.length)}
                     </span>
                   </div>
-                </motion.button>
+                  <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-2">{copy.title}</h2>
+                  <p className="text-base md:text-lg leading-relaxed text-white/70">{copy.tagline}</p>
+                </div>
+
+                <div className="lg:col-span-7 rounded-2xl bg-black/20 border border-white/[0.06] p-4 md:p-5">
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-white/60 mb-3">{t.works.whatIDo}</p>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2.5">
+                    {copy.services.map((service) => (
+                      <li key={service} className="flex items-start gap-2.5 text-sm md:text-[15px] leading-snug text-white/85">
+                        <Check size={16} className="shrink-0 mt-0.5" style={{ color: 'var(--theme-color)' }} aria-hidden="true" />
+                        {service}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
+
+              <div className={`grid gap-3 ${category.isVertical ? 'grid-cols-4 lg:grid-cols-8' : 'grid-cols-2 md:grid-cols-3'}`}>
+                {category.videos.map((video, index) => (
+                  <button
+                    key={video.key}
+                    type="button"
+                    onClick={() => setOpen({ category: categoryIndex, index })}
+                    aria-haspopup="dialog"
+                    aria-label={t.works.play(copy.title, index + 1)}
+                    className={`group/video relative block w-full overflow-hidden rounded-xl border border-white/10 bg-white/5 hover:border-white/30 transition-colors cursor-pointer ${
+                      category.isVertical ? 'aspect-[9/16]' : 'aspect-video'
+                    }`}
+                  >
+                    <img src={video.thumb} alt="" className="w-full h-full object-cover" loading="lazy" draggable={false} />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover/video:opacity-100 group-focus-visible/video:opacity-100 transition-opacity">
+                      <div className="btn-primary w-11 h-11 rounded-full flex items-center justify-center">
+                        <Play size={18} className="ml-0.5" fill="currentColor" aria-hidden="true" />
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </section>
           );
         })}
+
+        <section className="glass-card rounded-3xl p-5 md:p-7 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white mb-1">{t.works.ctaTitle}</h2>
+            <p className="text-base text-white/70">{t.works.ctaText}</p>
+          </div>
+          <a
+            href={TELEGRAM_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary shrink-0 self-start md:self-auto inline-flex items-center gap-3 rounded-full pl-7 pr-2 py-2 text-base font-bold transition-[transform,background-color] hover:-translate-y-0.5"
+          >
+            {t.works.ctaButton}
+            <span className="w-10 h-10 rounded-full bg-black/15 flex items-center justify-center">
+              <Send size={18} aria-hidden="true" />
+            </span>
+          </a>
+        </section>
       </div>
 
       {/* Rendered into <body>: the animated page wrapper has a transform, which would break `fixed` positioning */}
@@ -149,7 +139,7 @@ export default function Works() {
         <AnimatePresence>
           {open && openCategory && (
             <VideoLightbox
-              title={openCategory.title}
+              title={t.works.categories[open.category].title}
               videos={openCategory.videos}
               index={open.index}
               isVertical={openCategory.isVertical}
@@ -190,6 +180,7 @@ function VideoLightbox({
   onClose: () => void;
   onNavigate: (delta: number) => void;
 }) {
+  const { t } = useI18n();
   const video = videos[index];
   const dialogRef = useRef<HTMLDivElement>(null);
   const handlers = useRef({ onClose, onNavigate });
@@ -257,7 +248,7 @@ function VideoLightbox({
           ref={dialogRef}
           role="dialog"
           aria-modal="true"
-          aria-label={`${title} video ${index + 1}`}
+          aria-label={`${title} — ${index + 1}`}
           tabIndex={-1}
           className="outline-none"
         >
@@ -265,7 +256,7 @@ function VideoLightbox({
             <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--theme-color)' }}>
               {title}
             </p>
-            <button type="button" onClick={onClose} className={`${iconButton} shrink-0`} aria-label="Close video">
+            <button type="button" onClick={onClose} className={`${iconButton} shrink-0`} aria-label={t.works.close}>
               <X size={20} aria-hidden="true" />
             </button>
           </div>
@@ -281,7 +272,7 @@ function VideoLightbox({
             <iframe
               key={video.key}
               src={ytEmbedSrc(video)}
-              title={`${title} video ${index + 1}`}
+              title={`${title} — ${index + 1}`}
               className="w-full h-full border-0"
               allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
               allowFullScreen
@@ -291,13 +282,13 @@ function VideoLightbox({
 
           <div className="flex flex-wrap items-center justify-between gap-3 mt-4">
             <div className="flex items-center gap-3">
-              <button type="button" onClick={() => onNavigate(-1)} className={iconButton} aria-label="Previous video">
+              <button type="button" onClick={() => onNavigate(-1)} className={iconButton} aria-label={t.works.prev}>
                 <ChevronLeft size={20} aria-hidden="true" />
               </button>
               <span className="text-sm text-white/70 tabular-nums" aria-live="polite">
                 {index + 1} / {videos.length}
               </span>
-              <button type="button" onClick={() => onNavigate(1)} className={iconButton} aria-label="Next video">
+              <button type="button" onClick={() => onNavigate(1)} className={iconButton} aria-label={t.works.next}>
                 <ChevronRight size={20} aria-hidden="true" />
               </button>
             </div>
@@ -305,10 +296,9 @@ function VideoLightbox({
               href={video.url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-transform hover:scale-105 active:scale-95"
-              style={{ backgroundColor: 'var(--theme-color)', color: '#fff' }}
+              className="btn-primary inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-transform hover:scale-105 active:scale-95"
             >
-              Watch on YouTube
+              {t.works.youtube}
               <ExternalLink size={16} aria-hidden="true" />
             </a>
           </div>

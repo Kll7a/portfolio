@@ -4,6 +4,7 @@ import Main from './pages/Main';
 import Skills from './pages/Skills';
 import Works from './pages/Works';
 import Navigation from './components/Navigation';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 export type Tab = 'main' | 'skills' | 'works';
 
@@ -73,7 +74,7 @@ export default function App() {
 
   return (
     <div className="min-h-[100dvh] w-full flex items-center justify-center p-2 sm:p-4 md:p-8">
-      <div className="relative w-full max-w-[1400px] h-[95dvh] md:h-[800px] bg-[#121214] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-white/5 flex flex-col">
+      <div className="relative w-full max-w-[1400px] h-[95dvh] md:h-[800px] bg-[var(--surface)] rounded-[2rem] md:rounded-[3rem] overflow-clip shadow-2xl border border-white/5 flex flex-col">
         {/* Glowing background */}
         <div
           className="absolute top-0 right-0 w-[600px] md:w-[800px] h-[600px] md:h-[800px] rounded-full blur-[80px] md:blur-[120px] opacity-50 pointer-events-none transition-colors duration-700"
@@ -97,9 +98,9 @@ export default function App() {
               animate="center"
               exit="exit"
               transition={reduceMotion ? { duration: 0.15 } : { type: 'spring', stiffness: 300, damping: 30 }}
-              className="absolute inset-0 w-full h-full p-6 sm:p-8 md:p-16 md:pb-28 overflow-y-auto overflow-x-hidden scrollbar-subtle"
+              className="absolute inset-0 w-full h-full p-6 pt-20 sm:p-8 sm:pt-20 md:p-16 md:pb-28 overflow-y-auto overflow-x-hidden scrollbar-subtle"
             >
-              {currentTab === 'main' && <Main />}
+              {currentTab === 'main' && <Main onNavigate={handleTabChange} />}
               {currentTab === 'skills' && <Skills />}
               {currentTab === 'works' && <Works />}
             </motion.div>
@@ -108,8 +109,12 @@ export default function App() {
           {/* Fade at the bottom edge while there is more content to scroll to */}
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute inset-x-0 bottom-0 h-28 z-20 bg-gradient-to-t from-[#121214] via-[#121214]/70 to-transparent transition-opacity duration-300 ${hasMoreBelow ? 'opacity-100' : 'opacity-0'}`}
+            className={`pointer-events-none absolute inset-x-0 bottom-0 h-28 z-20 bg-gradient-to-t from-[var(--surface)] via-[var(--surface)]/70 to-transparent transition-opacity duration-300 ${hasMoreBelow ? 'opacity-100' : 'opacity-0'}`}
           />
+        </div>
+
+        <div className="absolute top-5 right-5 md:top-7 md:right-8 z-50">
+          <LanguageSwitcher />
         </div>
 
         {/* Navigation */}
